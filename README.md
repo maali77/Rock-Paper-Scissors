@@ -1,2 +1,3 @@
 # Rock-Paper-Scissors
-Basic quick game expirimenting with Javascript & HTML
+Basic quick game experimenting
+ with Javascript & HTML
