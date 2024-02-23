@@ -1,66 +1,80 @@
-function getComputerChoice(){
-    let computer_choice, num_gen;
+let scorePlayer = 0;
+let scoreComputer = 0;
+const buttons = document.querySelectorAll('button');
+const resultsDiv = document.getElementById('results');
 
-    num_gen = Math.floor(Math.random()*3)+1;
-    if(num_gen == 1){
-        computer_choice = "Rock";
-    }
-    else if(num_gen == 2){
-        computer_choice = "Paper";
-    }
-    else if (num_gen == 3){
-        computer_choice = "Scissors";
-    }
-    else{
-        getComputerChoice();
-    }
-    return computer_choice.toUpperCase();
-
+function getComputerChoice() {
+    const choices = ['rock', 'paper', 'scissors'];
+    return choices[Math.floor(Math.random() * choices.length)];
 }
 
-function getPlayerChoice(){
-    let player_choice;
-    player_choice = prompt(" 1. Rock \n 2. Paper \n 3. Scissors \n Please enter a number 1 through 3");
+function playRound(playerSelection) {
+    const computerSelection = getComputerChoice();
+    const outcome = compareSelections(playerSelection, computerSelection);
 
-    return player_choice.toUpperCase();
+    resultsDiv.textContent += '\n' + outcome; // Append the new outcome
+
+    if (outcome.includes('You have won')) {
+        scorePlayer++;
+    } else if (outcome.includes('You have lost')) {
+        scoreComputer++;
+    }
+
+    updateScore();
+    checkWinner();
 }
-function playRound(computer_select,player_select){
-    if(computer_select === player_select){
-        return "Tie!";
+
+
+function compareSelections(playerSelection, computerSelection) {
+    // Tie scenario
+    if (playerSelection === computerSelection) {
+      return "It's a tie!";
     }
-    else if(computer_select == "ROCK" && player_select == "PAPER"){
-        score_player++;
-        return `You have won! ${player_select} beats ${computer_select}!`;
+  
+    // Winning combinations for player
+    if (playerSelection === "rock") {
+      if (computerSelection === "scissors") {
+        scorePlayer++;
+        return "You win! Rock beats Scissors.";
+      } else {
+        scoreComputer++;
+        return "You lose! Rock is beaten by Paper.";
+      }
+    } else if (playerSelection === "paper") {
+      if (computerSelection === "rock") {
+        return "You win! Paper beats Rock.";
+      } else {
+        return "You lose! Paper is beaten by Scissors.";
+      }
+    } else if (playerSelection === "scissors") {
+      if (computerSelection === "paper") {
+        return "You win! Scissors beat Paper.";
+      } else {
+        return "You lose! Scissors are beaten by Rock.";
+      }
     }
-    else if(computer_select == "SCISSORS" && player_select == "ROCK"){
-        score_player++;
-        return `You have won! ${player_select} beats ${computer_select}`;
-    }
-    else if(computer_select == "PAPER" && player_select == "SCISSORS"){
-        score_player++;
-        return `You have won! ${player_select} beats ${computer_select}`;
-    }
-    else{
-        score_computer++;
-        return `You have lost! ${computer_select} beats ${player_select}`;
+  
+    // This should never be reached, but added for completeness
+    return "Invalid selection.";
+}
+
+function updateScore() {
+    resultsDiv.textContent += `\nPlayer: ${scorePlayer} - Computer: ${scoreComputer}`;
+}
+
+function checkWinner() {
+    if (scorePlayer >= 5 || scoreComputer >= 5) {
+      const winner = scorePlayer > scoreComputer ? "Player" : "Computer";
+      alert(`${winner} has won!`);
+      // Reset scores for a new game
+      scorePlayer = 0;
+      scoreComputer = 0;
+      updateScore();
     }
 }
-function playGame(){
-    for(let i =0; i < 5; i++){
-        let c_choice = getComputerChoice();
-        let p_choice = getPlayerChoice();
-        alert(playRound(c_choice,p_choice));
 
-    }
-    if(score_player > score_computer){
-        alert(`Congratulations! You have won with a score of ${score_player} out of 5`);
-
-    }
-    else {
-        alert(`You have lost with a score of ${score}!`);
-
-    }
-}
-let score_player = 0, score_computer = 0;
-alert("lets play a game of Rock, Paper, and Scissors!");
-playGame();
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        playRound(button.id);
+    });
+});
