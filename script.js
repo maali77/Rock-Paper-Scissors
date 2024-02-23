@@ -20,7 +20,7 @@ function getComputerChoice(){
 
 function getPlayerChoice(){
     let player_choice;
-    player_choice = prompt("1: Rock /n 2: Paper /n 3: Scissors /n Please enter a number 1 through 3");
+    player_choice = prompt(" 1. Rock \n 2. Paper \n 3. Scissors \n Please enter a number 1 through 3");
 
     return player_choice.toUpperCase();
 }
@@ -30,19 +30,19 @@ function playRound(computer_select,player_select){
     }
     else if(computer_select == "ROCK" && player_select == "PAPER"){
         score_player++;
-        return "You have won! ${player_select} beats ${computer_select}!";
+        return `You have won! ${player_select} beats ${computer_select}!`;
     }
     else if(computer_select == "SCISSORS" && player_select == "ROCK"){
         score_player++;
-        return "You have won! ${player_select} beats ${computer_select}";
+        return `You have won! ${player_select} beats ${computer_select}`;
     }
     else if(computer_select == "PAPER" && player_select == "SCISSORS"){
         score_player++;
-        return "You have won! ${player_select} beats ${computer_select}";
+        return `You have won! ${player_select} beats ${computer_select}`;
     }
     else{
         score_computer++;
-        return "You have lost! ${computer_select} beats ${player_select}";
+        return `You have lost! ${computer_select} beats ${player_select}`;
     }
 }
 function playGame(){
@@ -53,11 +53,11 @@ function playGame(){
 
     }
     if(score_player > score_computer){
-        alert("Congratulations! You have won with a score of ${score_player} out of 5");
+        alert(`Congratulations! You have won with a score of ${score_player} out of 5`);
 
     }
     else {
-        alert("You have lost with a score of ${score}!");
+        alert(`You have lost with a score of ${score}!`);
 
     }
 }
