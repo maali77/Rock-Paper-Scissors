@@ -1,9 +1,16 @@
 *{
-    flex: auto;
-    color: aqua;
-    background-color: brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;    color: black;
+    background-color: white;
 }
 button{
-    background-color: blue;
-    color: blueviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 100px;
+    
+    background-color: pink;
+    color: black;
 }
